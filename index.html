@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>小迪专用节拍器By小赵先生</title>
+  <style>
+    /* 动态渐变背景与基础样式 */
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand&display=swap');
+
+    :root {
+      font-size: 15px;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      background-color: #e493d0;
+      background-image:
+        radial-gradient(closest-side, rgba(235, 105, 78, 1), rgba(235, 105, 78, 0)),
+        radial-gradient(closest-side, rgba(243, 11, 164, 1), rgba(243, 11, 164, 0)),
+        radial-gradient(closest-side, rgba(254, 234, 131, 1), rgba(254, 234, 131, 0)),
+        radial-gradient(closest-side, rgba(170, 142, 245, 1), rgba(170, 142, 245, 0)),
+        radial-gradient(closest-side, rgba(248, 192, 147, 1), rgba(248, 192, 147, 0));
+      background-size:
+        130vmax 130vmax,
+        80vmax 80vmax,
+        90vmax 90vmax,
+        110vmax 110vmax,
+        90vmax 90vmax;
+      background-position:
+        -80vmax -80vmax,
+        60vmax -30vmax,
+        10vmax 10vmax,
+        -30vmax -10vmax,
+        50vmax 50vmax;
+      background-repeat: no-repeat;
+      animation: 10s movement linear infinite;
+    }
+
+    body::after {
+      content: '';
+      display: block;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    span {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      min-height: 100vh;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 5rem;
+      color: transparent;
+      text-shadow:
+        0px 0px 1px rgba(255, 255, 255, .6),
+        0px 4px 4px rgba(0, 0, 0, .05);
+      letter-spacing: .2rem;
+    }
+
+    @keyframes movement {
+
+      0%,
+      100% {
+        background-size:
+          130vmax 130vmax,
+          80vmax 80vmax,
+          90vmax 90vmax,
+          110vmax 110vmax,
+          90vmax 90vmax;
+        background-position:
+          -80vmax -80vmax,
+          60vmax -30vmax,
+          10vmax 10vmax,
+          -30vmax -10vmax,
+          50vmax 50vmax;
+      }
+
+      25% {
+        background-size:
+          100vmax 100vmax,
+          90vmax 90vmax,
+          100vmax 100vmax,
+          90vmax 90vmax,
+          60vmax 60vmax;
+        background-position:
+          -60vmax -90vmax,
+          50vmax -40vmax,
+          0vmax -20vmax,
+          -40vmax -20vmax,
+          40vmax 60vmax;
+      }
+
+      50% {
+        background-size:
+          80vmax 80vmax,
+          110vmax 110vmax,
+          80vmax 80vmax,
+          60vmax 60vmax,
+          80vmax 80vmax;
+        background-position:
+          -50vmax -70vmax,
+          40vmax -30vmax,
+          10vmax 0vmax,
+          20vmax 10vmax,
+          30vmax 70vmax;
+      }
+
+      75% {
+        background-size:
+          90vmax 90vmax,
+          90vmax 90vmax,
+          100vmax 100vmax,
+          90vmax 90vmax,
+          70vmax 70vmax;
+        background-position:
+          -50vmax -40vmax,
+          50vmax -30vmax,
+          20vmax 0vmax,
+          -10vmax 10vmax,
+          40vmax 60vmax;
+      }
+    }
+
+    /* 容器与动画方块 */
+    section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    .box {
+      position: relative;
+    }
+
+    .box .square {
+      position: absolute;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 25px 45px rgb(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      animation: animate 10s linear infinite;
+      animation-delay: calc(-1s * var(--i));
+    }
+
+    @keyframes animate {
+
+      0%,
+      100% {
+        transform: translateY(-40px);
+      }
+
+      50% {
+        transform: translate(40px);
+      }
+    }
+
+    .box .square:nth-child(1) {
+      top: -50px;
+      right: -60px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .box .square:nth-child(2) {
+      top: 150px;
+      left: -100px;
+      width: 120px;
+      height: 120px;
+      z-index: 2;
+    }
+
+    .box .square:nth-child(3) {
+      bottom: 50px;
+      right: -60px;
+      width: 80px;
+      height: 80px;
+      z-index: 2;
+    }
+
+    .box .square:nth-child(4) {
+      bottom: -80px;
+      left: 100px;
+      width: 50px;
+      height: 50px;
+    }
+
+    .box .square:nth-child(5) {
+      top: -90px;
+      left: 140px;
+      width: 60px;
+      height: 60px;
+    }
+
+    .container {
+      position: relative;
+      width: 400px;
+      min-height: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 25px 45px rgb(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right: 1px solid rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 2;
+    }
+
+    .form {
+      position: relative;
+      width: 100%;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .form h2 {
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .form h2::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -10px;
+      width: 80px;
+      height: 4px;
+      background: #fff;
+    }
+
+    /* 节拍器控件 */
+    .metronome-controls {
+      width: 100%;
+    }
+
+    .metronome-controls .control {
+      margin: 10px 0;
+      text-align: center;
+    }
+
+    .metronome-controls label {
+      color: #fff;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+
+    .metronome-controls input[type="number"] {
+      width: 80px;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      outline: none;
+    }
+
+    .metronome-controls input[type="range"] {
+      width: 90%;
+      margin: 10px 0;
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.3);
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .metronome-controls input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #007BFF;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .metronome-controls select {
+      width: 80px;
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      outline: none;
+      background: #fff;
+      color: #000;
+      /* 默认显示的文字颜色 */
+      -webkit-appearance: none;
+      /* 移除默认样式 */
+      -moz-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .metronome-controls select option {
+      color: #000;
+      /* 下拉列表文字颜色 */
+      background: #fff;
+      /* 下拉列表背景颜色 */
+    }
+
+    .metronome-controls button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      background: #007BFF;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .visual-indicator {
+      margin: 20px auto;
+      height: 20px;
+      width: 80%;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .visual-indicator .pulse {
+      height: 100%;
+      width: 0%;
+      background: #007BFF;
+      transition: width 0.1s ease-out;
+    }
+
+    .tap-tempo button {
+      background: #28a745;
+    }
+
+    /* 摆动动画 */
+    .pendulum-container {
+      position: relative;
+      height: 100px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pendulum {
+      width: 10px;
+      height: 100px;
+      background: #007BFF;
+      position: absolute;
+      transform-origin: top;
+      transition: transform 0.1s ease-out;
+    }
+
+    .pendulum.swing-left {
+      transform: rotate(-30deg);
+    }
+
+    .pendulum.swing-right {
+      transform: rotate(30deg);
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div class="box">
+      <div class="square" style="--i:0;"></div>
+      <div class="square" style="--i:1;"></div>
+      <div class="square" style="--i:2;"></div>
+      <div class="square" style="--i:3;"></div>
+      <div class="square" style="--i:4;"></div>
+      <div class="container">
+        <div class="form">
+          <h2>小迪专用节拍器</h2>
+          <div class="metronome-controls">
+            <div class="control">
+              <label for="bpm">BPM:</label>
+              <input type="number" id="bpm" value="120" min="40" max="240">
+            </div>
+            <div class="control">
+              <input type="range" id="bpmRange" value="120" min="40" max="240">
+            </div>
+            <div class="control">
+              <label for="timeSignature">节拍模式:</label>
+              <select id="timeSignature">
+                <option value="2">2/4</option>
+                <option value="3">3/4</option>
+                <option value="4" selected>4/4</option>
+                <option value="6">6/8</option>
+              </select>
+            </div>
+            <div class="control">
+              <label for="accent">强调拍:</label>
+              <input type="number" id="accent" value="1" min="1" max="4">
+            </div>
+            <div class="control">
+              <label for="volume">音量:</label> 
+              <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+            </div>
+            <div class="control">
+              <button id="startStopBtn">开始</button>
+            </div>
+            <div class="pendulum-container">
+              <div class="pendulum"></div>
+            </div>
+            <div class="visual-indicator">
+              <div class="pulse"></div>
+            </div>
+            <div class="control tap-tempo">
+              <button id="tapBtn">点击节奏</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    // 获取页面元素
+    const bpmInput = document.getElementById('bpm');
+    const bpmRange = document.getElementById('bpmRange');
+    const timeSignature = document.getElementById('timeSignature');
+    const accent = document.getElementById('accent');
+    const volumeControl = document.getElementById('volume');
+    const startStopBtn = document.getElementById('startStopBtn');
+    const pendulum = document.querySelector('.pendulum');
+    const visualIndicator = document.querySelector('.visual-indicator .pulse');
+    const tapBtn = document.getElementById('tapBtn');
+
+    let audioContext = null;
+    let timer = null;
+    let currentBpm = 120;
+    let beatsPerMeasure = 4;
+    let accentBeat = 1;
+    let volume = 1;
+    let lastTapTime = 0;
+    let tapIntervals = [];
+
+    // 加载保存的设置
+    window.onload = () => {
+      currentBpm = localStorage.getItem('bpm') || 120;
+      beatsPerMeasure = localStorage.getItem('beatsPerMeasure') || 4;
+      accentBeat = localStorage.getItem('accentBeat') || 1;
+      volume = localStorage.getItem('volume') || 1;
+      bpmInput.value = currentBpm;
+      bpmRange.value = currentBpm;
+      timeSignature.value = beatsPerMeasure;
+      accent.value = accentBeat;
+      volumeControl.value = volume;
+    };
+
+    // 同步数字输入框与滑动条
+    bpmInput.addEventListener('input', () => {
+      let bpm = parseInt(bpmInput.value);
+      if (bpm < 40) bpm = 40;
+      if (bpm > 240) bpm = 240;
+      bpmInput.value = bpm;
+      bpmRange.value = bpm;
+      currentBpm = bpm;
+      localStorage.setItem('bpm', currentBpm);
+      if (timer) {
+        stopMetronome();
+        startMetronome();
+      }
+    });
+    bpmRange.addEventListener('input', () => {
+      let bpm = parseInt(bpmRange.value);
+      bpmInput.value = bpm;
+      currentBpm = bpm;
+      localStorage.setItem('bpm', currentBpm);
+      if (timer) {
+        stopMetronome();
+        startMetronome();
+      }
+    });
+
+    // 节拍模式选择
+    timeSignature.addEventListener('change', () => {
+      beatsPerMeasure = parseInt(timeSignature.value);
+      localStorage.setItem('beatsPerMeasure', beatsPerMeasure);
+      if (timer) {
+        stopMetronome();
+        startMetronome();
+      }
+    });
+
+    // 强调拍选择
+    accent.addEventListener('change', () => {
+      accentBeat = Math.min(parseInt(accent.value), beatsPerMeasure);
+      accent.value = accentBeat;
+      localStorage.setItem('accentBeat', accentBeat);
+      if (timer) {
+        stopMetronome();
+        startMetronome();
+      }
+    });
+
+    // 音量控制
+    volumeControl.addEventListener('input', () => {
+      volume = parseFloat(volumeControl.value);
+      localStorage.setItem('volume', volume);
+    });
+
+    // 播放提示音（第一拍强调）
+    function playClick(isAccent = false) {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.frequency.value = isAccent ? 1000 : 800;
+      gainNode.gain.value = (isAccent ? 1 : 0.7) * volume;
+
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + 0.1);
+    }
+
+    // 启动节拍器
+    function startMetronome() {
+      const interval = 60000 / currentBpm;
+      let beatCount = 0;
+      timer = setInterval(() => {
+        playClick((beatCount % beatsPerMeasure) + 1 === accentBeat);
+        // 视觉反馈
+        visualIndicator.style.width = '100%';
+        setTimeout(() => {
+          visualIndicator.style.width = '0%';
+        }, 100);
+        // 摆动动画
+        pendulum.classList.toggle('swing-left', beatCount % 2 === 0);
+        pendulum.classList.toggle('swing-right', beatCount % 2 !== 0);
+        beatCount++;
+      }, interval);
+      startStopBtn.textContent = '停止';
+    }
+
+    // 停止节拍器
+    function stopMetronome() {
+      clearInterval(timer);
+      timer = null;
+      startStopBtn.textContent = '开始';
+      pendulum.classList.remove('swing-left', 'swing-right');
+    }
+
+    // 开始/停止按钮监听
+    startStopBtn.addEventListener('click', () => {
+      if (timer) {
+        stopMetronome();
+      } else {
+        startMetronome();
+      }
+    });
+
+    // 点击节奏 (Tap Tempo) 功能
+    tapBtn.addEventListener('click', () => {
+      const now = Date.now();
+      if (lastTapTime !== 0) {
+        const interval = now - lastTapTime;
+        tapIntervals.push(interval);
+        if (tapIntervals.length > 4) tapIntervals.shift();
+        const averageInterval = tapIntervals.reduce((a, b) => a + b, 0) / tapIntervals.length;
+        currentBpm = Math.round(60000 / averageInterval);
+        currentBpm = Math.max(40, Math.min(currentBpm, 240));
+        bpmInput.value = currentBpm;
+        bpmRange.value = currentBpm;
+        localStorage.setItem('bpm', currentBpm);
+        if (timer) {
+          stopMetronome();
+          startMetronome();
+        }
+      }
+      lastTapTime = now;
+    });
+  </script>
+</body>
+
+</html>
